@@ -55,15 +55,15 @@ def conn_tcp(dst_host, dst_port, timeout, src_host=None, src_port=None, rst=Fals
         t2 = time.time()
         s.close()
         t3 = time.time()
-    except Exception, e:
+    except Exception as e:
         local_addr = s.getsockname()
         err = e
         te = time.time()
     finally:
         try:
             s.close()
-        except Exception, e2:
-            print e2
+        except Exception as e2:
+            print(e2)
 
     if t2 >= 0:
         conn_time = t2 - t1
@@ -89,7 +89,7 @@ def judge_args(argument):
     # 检查本机地址和本地端口是否按规则给出
     if bool(argument.src_host) ^ (bool(argument.src_port) or bool(argument.src_rotate_port)):
         tip = 'src_host and src_port(src_rotate_port) must be given at the same time'
-        print tip
+        print(tip)
         mylogger.error(tip)
         return False
     else:
@@ -137,7 +137,7 @@ def go(dst_host, dst_port, timeout, interval, src_host=None, src_port=None, coun
             src_port += 1
         if src_port >= 65536:
             tip_reach_65535 = 'Local port reach 65535,reset src port to 1024.'
-            print tip_reach_65535
+            print(tip_reach_65535)
             mylogger.warning(tip_reach_65535)
             src_port = 1024
 
@@ -281,6 +281,6 @@ if __name__ == '__main__':
            src_rotate_port=args.src_rotate_port if args.src_rotate_port else None, rst=args.rst if args.rst else None,
            count=args.count if args.count else None,
            ipv6=args.ipv6)
-        print result.get_statistics()
+        print(result.get_statistics())
     else:
         pass
